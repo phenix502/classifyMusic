@@ -11,7 +11,7 @@ dtm <- function(corpus, tfidf = FALSE){
                                                      stopwords=mystopwords))
   }
   ##去掉稀疏矩阵中低频率的词
-  cor.dtm <- removeSparseTerms(cor.dtm, 0.97)
+  cor.dtm <- removeSparseTerms(cor.dtm, 0.98)
   
   ## 使得每一行至少有一个词不为0
   #rowTotals <- apply(cor.dtm, 1, sum)

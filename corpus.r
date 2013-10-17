@@ -7,7 +7,7 @@ corpus <- function(song){
   removeEnglish <- function(x){
     gsub("[a-z]+|[A-Z]+","",x)
   }
-  song <- lapply(song, removeEnglish)
+  #song <- lapply(song, removeEnglish)
   
   ##分词
   word <- lapply(song,segmentCN)

@@ -1,6 +1,8 @@
 #加载包
-
+library(tm)
+library(Rwordseg)
 library(RTextTools)
+library(FSelector)
 
 
 # 防止读入的所有string都被当成factor
@@ -13,30 +15,51 @@ Infor.sad <- read.csv('sadsong.csv', header=TRUE)
 song.sweet <- Infor.sweet$lyric
 song.sad <- Infor.sad$lyric
 
-# 形成corpus
-song.sad.corpus <- corpus(song.sad)
-song.sweet.corpus <- corpus(song.sweet)
 
-# 合成甜蜜和伤感的语料库
-song.corpus <- c(song.sad.corpus, song.sweet.corpus)
+
 
 # 形成DocumentTermMatrix
-song.corpus.dtm <- dtm(song.corpus)
-song.corpus.dtm.tfidf <- dtm(song.corpus, tfidf=TRUE)
+corpus.dtm <- dtm(corpus)
+corpus.dtm.tfidf <- dtm(corpus, tfidf=TRUE)
+# 情感词典
+corpus.emotion.dtm <- dtm(corpus.emotion)
 
 
 # 转为data frame
-#song.corpus.dataframe <- as.data.frame(inspect(song.corpus.dtm))
+corpus.df <- as.data.frame(inspect(corpus.dtm))
+label <- c(rep("sad",764), rep("sweet",861))
+label <- factor(label)
+# 标注标签
+corpus.df$label <- label
+# 卡方检验
+weights.chi <- chi.squared(label~., corpus.df)
+subset.chi <- cutoff.k(weights.chi, 200)
+f.chi <- as.simple.formula(subset.chi, "label")
+
+# information gain
+
+weights.in <- information.gain(label~., corpus.df)
+subset.in <- cutoff.k(weights.in, 200)
+f.in <- as.simple.formula(subset.in, "label")
+
+weights.rf <- random.forest.importance(label~., corpus.df)
 #rownames(song.corpus.dataframe) <- 1:nrow(song.corpus.dataframe)
 #song.corpus.dataframe.tfidf <- as.data.frame(inspect(song.corpus.dtm.tfidf))
 #rownames(song.corpus.dataframe.tfidf) <- 1:nrow(song.corpus.dataframe.tfidf)
+
+
+# 提取出来的特征做为一个新的数据框
+
+feature.chi <- names(corpus.df) %in% subset.chi
+df.chi <- corpus.df[feature.chi] 
+## 数据分析阶段
 
 # 1 表示sad 2表示sweet
 class <- c(rep(1,764), rep(2, 861))
 class <- as.factor(class)
 
 # create a container
-container <- create_container(song.corpus.dtm, class,trainSize=1:1528, testSize=1529:1625, virgin=FALSE)
+container <- create_container(song.corpus.emotion.dtm, class,trainSize=1:1528, testSize=1529:1625, virgin=FALSE)
 
 # training models
 SVM <- train_model(container, "SVM")
@@ -69,7 +92,7 @@ CLASSIFY <- cbind(SVM_CLASSIFY, SLDA_CLASSIFY,
 # analytics
 analytics <- create_analytics(container,CLASSIFY)
 summary(analytics)
-
+create_ensembleSummary(analytics@document_summary)
 
 
 

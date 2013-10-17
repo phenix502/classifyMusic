@@ -1,5 +1,5 @@
 Cal_precision <- function(x){
-  label <- factor(c(rep(1,97)), levels = c(1,2), labels = c("sweet","sad"))
+  label <- factor(c(rep(2,97)), levels = c(1,2))
   precision <- length(x[x==label])/97
   return(precision)
 }
