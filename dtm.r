@@ -2,12 +2,12 @@ dtm <- function(corpus, tfidf = FALSE){
   ## 文档-词矩阵 词的长度大于1就纳入矩阵  TFIDF minDocFreq
   mystopwords <- readLines("stopwords.txt")
   if (tfidf==TRUE){
-    cor.dtm <- DocumentTermMatrix(corpus, control=list( wordLengths = c(2, 4),
+    cor.dtm <- DocumentTermMatrix(corpus, control=list( wordLengths = c(2, Inf),
                                                      stopwords=mystopwords,
                                                      weighting = weightTfIdf))
   }
   else{
-    cor.dtm <- DocumentTermMatrix(corpus, control=list( wordLengths = c(2, 4),
+    cor.dtm <- DocumentTermMatrix(corpus, control=list( wordLengths = c(2, Inf),
                                                      stopwords=mystopwords))
   }
   ##去掉稀疏矩阵中低频率的词
