@@ -32,6 +32,11 @@ subset <- cutoff.k(weights.rf, 100)
 feature.df <- as.DocumentTermMatrix(corpus.df[subset],weighting=weightTf)
 
 
+result_all_corpus <- algorithom_summary(corpus.dtm.tfidf)
+result_feature <- algorithom_summary(feature.df)
+
+
+
 
 # 提取出来的特征做为一个新的数据框
 d <- data.frame(word = rownames(weights.rf), freq= weights.rf$attr_importance)
