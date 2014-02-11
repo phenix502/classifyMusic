@@ -1,0 +1,17 @@
+{
+    "contents" : "\n# 1 表示sad 2表示sweet\nlabel <- c(rep(\"sad\",764), rep(\"sweet\",861))\n#  从伤感歌词中挑选64首作为测试集，同理甜蜜类挑选61首作为测试集\nsad.test <- sample(1:764, 64, replace= FALSE)\nsweet.test <-sample(765:1625,61,replace= FALSE)\ntestSize <- c(sad.test,sweet.test)\ntrainSize <- 1:1625\ntrainSize <- trainSize[-test]\n\n# create a container\nalgorithom_summary <- function(dtm){\ncontainer.song <- create_container(dtm, label,\n                                   trainSize=trainSize, testSize=testSize, virgin=FALSE)\n\n# training models\nSVM.song <- train_model(container.song, \"SVM\")\nRF.song <- train_model(container.song, \"RF\")\n\n# classifying data using trained models\nSVM_CLASSIFY.song <- classify_model(container.song, SVM.song)\nRF_CLASSIFY.song <- classify_model(container.song, RF.song)\n\n\nSVM_result <- create_precisionRecallSummary(container=container.song, classification_results=SVM_CLASSIFY.song)\nRF_result <-create_precisionRecallSummary(container=container.song, classification_results=RF_CLASSIFY.song)\nreturn(list(SVM_RESULT=SVM_result,RF_RESULT=RF_result))\n}\n",
+    "created" : 1390374215372.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3117822425",
+    "id" : "101A52E2",
+    "lastKnownWriteTime" : 1390476433,
+    "path" : "~/Dropbox/project/Rcode/classifyMusic/analysis.r",
+    "project_path" : "analysis.r",
+    "properties" : {
+        "tempName" : "Untitled3"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

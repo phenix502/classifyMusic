@@ -1,0 +1,17 @@
+{
+    "contents" : "#加载包\n# Fselector，用随机森林算法选择最重要的前几个变量\n# 此文档为重要分析文档，会调用别的函数\nlibrary(tm)\nlibrary(Rwordseg)\nlibrary(RTextTools)\nlibrary(FSelector)\n\n\n# 防止读入的所有string都被当成factor\noptions(stringsAsFactors=FALSE)\n# 读入csv文件\nInfor.sweet <- read.csv('material/sweetsong.csv', header=TRUE)\nInfor.sad <- read.csv('material/sadsong.csv', header=TRUE)\n\n# 分词并形成语料库\ncorpus <- makeCorpus(Infor.sweet$lyric, Infor.sad$lyric)\n\n# 形成DocumentTermMatrix\ncorpus.dtm.tfidf <- dtm(corpus, tfidf=TRUE)\n\n\n# 转为data frame\ncorpus.df <- as.data.frame(inspect(corpus.dtm.tfidf))\n\n## 随机森林算法选取前100个重要的词语\nweights.rf <- random.forest.importance(label~., corpus.df, 1)\nsubset <- cutoff.k(weights.rf, 100)\n\n\n## 把提取的特征作为新的docment-term matrix\nfeature.df <- as.DocumentTermMatrix(corpus.df[subset],weighting=weightTf)\n\n\nresult_all_corpus <- algorithom_summary(corpus.dtm.tfidf)\nresult_feature <- algorithom_summary(feature.df)\n\n\n\n\n# 提取出来的特征做为一个新的数据框\nd <- data.frame(word = rownames(weights.rf), freq= weights.rf$attr_importance)\n# 按重要性从大到小排列\nnewdata <- d[order(-d$freq),]\n#画出词云\nwordcloud(d$word, d$freq, random.order = F, colors = brewer.pal(8, \"Dark2\"))\n\n\n",
+    "created" : 1378187350840.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2750770706",
+    "id" : "2D1E9A12",
+    "lastKnownWriteTime" : 1390476615,
+    "path" : "~/Dropbox/project/Rcode/classifyMusic/classifyMusic.r",
+    "project_path" : "classifyMusic.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

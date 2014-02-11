@@ -1,0 +1,16 @@
+{
+    "contents" : "<link href=\"http://kevinburke.bitbucket.org/markdowncss/markdown.css\" rel=\"stylesheet\"></link>\n\n##基于随机森林的歌曲情感识别\n### 1 引言\n### 2 相关技术\n### 3 随机森林\n\n### 4 数据集及实验分析\n\n监督学习的文本分类流程如下：\n\n1. 获取数据\n2. 语料库\n3. 人工标注\n4. 分词\n5. 文档词条矩阵\n6. 特征提取\n7. 分类算法\n\n#### 4.1 数据集 \n本文的实验数据来自与百度音乐下“伤感”类和“甜蜜”类标签的所有歌词，其中“甜蜜”类歌曲和“伤感”类歌曲各1000首。采用人工复制粘贴的方式获取数据是比较艰辛的，因此我们采用开源的爬虫框架scrapy[^1]，根据百度音乐的网页规则编写一个定制的爬虫程序。数据被爬取保存到数据库之后，使用google refine，一个强大与易用的数据清洗工具，把英文、韩文、日文等外语歌词和歌词内一些超链接去掉后。由764篇伤感类歌词和861篇甜蜜类歌词组成语料库。\n\n             伤感类歌曲           甜蜜类歌曲\n--------    ------------     ---------------\n数量           764                861\n--------    ------------     ---------------\nTable: 语料库组成\n\n\n\n\n\n\n\n\n\n           Tweedledee       Tweedledum\n--------   --------------   ----------------\nAge        14               14\nHeight     3'2\"             3'2\"\nPolitics   Conservative     Conservative\nReligion   \"New Age\"        Syrian Orthodox\n---------  --------------   ----------------\n### 5 总结\n\n[^1]: 大数据时代下爬虫技术的兴起, 黄聪 \n",
+    "created" : 1391831317413.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3907978445",
+    "id" : "290548C0",
+    "lastKnownWriteTime" : 1383094656,
+    "path" : "~/Dropbox/project/Rcode/classifyMusic/report.md",
+    "project_path" : "report.md",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "markdown"
+}

@@ -1,0 +1,16 @@
+{
+    "contents" : "## 由两个character类型的变量\n## 形成语料库\nremoveEnglish <- function(x){\n  gsub(\"[a-z]+|[A-Z]+\",\"\",x)\n}\n\nmakeCorpus <- function(str1, str2){\n# 伤感歌曲分词   组成语料库\nword.sad <- lapply(str1,removeEnglish)\nword.sad <- lapply(word.sad,segmentCN)\ncorpus.sad <- Corpus(VectorSource(word.sad))\n\n# 甜蜜歌曲分词   组成语料库\nword.sweet <- lapply(str2, removeEnglish)\nword.sweet <- lapply(word.sweet, segmentCN)\ncorpus.sweet <- Corpus(VectorSource(word.sweet))\n\n# 合成预料库\ncorpus <- c(corpus.sad, corpus.sweet)\nreturn(corpus)\n}",
+    "created" : 1392087492873.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3816666557",
+    "id" : "CC71561",
+    "lastKnownWriteTime" : 1390350618,
+    "path" : "~/GitHub/classifyMusic/markCorpus.r",
+    "project_path" : "markCorpus.r",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

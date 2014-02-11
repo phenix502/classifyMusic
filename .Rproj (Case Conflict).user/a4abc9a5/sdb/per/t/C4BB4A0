@@ -1,0 +1,16 @@
+{
+    "contents" : "library(tm)\nlibrary(Rwordseg)\n## song is a list\ncorpus <- function(song){\n  \n  # 删除英语\n  removeEnglish <- function(x){\n    gsub(\"[a-z]+|[A-Z]+\",\"\",x)\n  }\n  #song <- lapply(song, removeEnglish)\n  \n  ##分词\n  word <- lapply(song,segmentCN)\n  \n  ##形成语料库\n  return (Corpus(VectorSource(word)))\n  \n \n}",
+    "created" : 1390382420203.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1079034196",
+    "id" : "C4BB4A0",
+    "lastKnownWriteTime" : 1381922176,
+    "path" : "~/Dropbox/project/Rcode/classifyMusic/corpus.r",
+    "project_path" : "corpus.r",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

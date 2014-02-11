@@ -1,6 +1,6 @@
 dtm <- function(corpus, tfidf = FALSE){
   ## 文档-词矩阵 词的长度大于1就纳入矩阵  TFIDF minDocFreq
-  mystopwords <- readLines("stopwords.txt")
+  mystopwords <- readLines("material/stopwords.txt")
   if (tfidf==TRUE){
     cor.dtm <- DocumentTermMatrix(corpus, control=list( wordLengths = c(2, Inf),
                                                      stopwords=mystopwords,
